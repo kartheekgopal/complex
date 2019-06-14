@@ -3,7 +3,7 @@ services:
   - docker
 
 before_installation:
-  - docker build -t kartheekgopal/complex -f ./client/Dockerfile.dev ./client
+  - docker build -t kartheekgopal/complex/docker-multi-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run kartheekgopal/docker-multi-test npm test -- --coverage
@@ -13,3 +13,10 @@ after_success:
   - docker build -t kartheekgopal/docker-multi-nginx ./nginx
   - docker build -t kartheekgopal/docker-multi-server ./server
   - docker build -t kartheekgopal/docker-multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push kartheekgopal/docker-multi-client
+  - docker push kartheekgopal/docker-multi-nginx
+  - docker push kartheekgopal/docker-multi-server
+  - docker push kartheekgopal/docker-multi-worker
