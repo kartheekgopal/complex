@@ -3,7 +3,7 @@ services:
   - docker
 
 before_installation:
-  - docker build -t kartheekgopal/complex/docker-multi-test -f ./client/Dockerfile.dev ./client
+  - docker build -t kartheekgopal/docker-multi-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run kartheekgopal/docker-multi-test npm test -- --coverage
